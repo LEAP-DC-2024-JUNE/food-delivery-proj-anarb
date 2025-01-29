@@ -1,6 +1,9 @@
 // import mongoose from "mongoose";
+// import dotenv from "dotenv";
 
-// const MONGO_URL = "mongodb+srv://anarb:pass123@fooddelivery.mj1yh.mongodb.net/";
+// dotenv.config();
+
+// const MONGO_URL = process.env.MONGO_URL;
 
 // const connectDb = async () => {
 //   try {
