@@ -1,9 +1,13 @@
 import express from "express";
 import connectDb from "./configs/mongoDbConfig.js";
 import { ObjectId } from "mongodb";
+import cors from "cors";
 
 const server = express();
 const PORT = 3001;
+
+server.use(express.json());
+server.use(cors({ origin: "http://localhost:3000" }));
 
 server.get("/", (req, res) => {
   res.send("Hello World");
@@ -12,9 +16,15 @@ server.get("/", (req, res) => {
 server.post("/create-user", async (req, res) => {
   let db = await connectDb();
   try {
+    const { name, age, phoneNumber } = req.body;
+
+    if (!name || !age || !phoneNumber) {
+      return res.status(400).json({ success: false, error: "Missing fields" });
+    }
     let result = await db.insertOne({
-      name: "Anar",
-      age: 27,
+      name,
+      age,
+      phoneNumber,
     });
     res.json({ success: true, result });
   } catch (error) {
