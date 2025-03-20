@@ -7,10 +7,11 @@ const server = express();
 const PORT = 3001;
 
 server.use(express.json());
-server.use(cors({ origin: "http://localhost:3000" }));
+server.use(cors());
 
 server.get("/", (req, res) => {
-  res.send("Hello World");
+  res.setHeader("Content-Type", "application/json");
+  res.json({ message: "Hello from Render!" });
 });
 
 server.post("/create-user", async (req, res) => {
@@ -57,12 +58,13 @@ server.get("/get-user", async (req, res) => {
 
 server.put("/update-user", async (req, res) => {
   let db = await connectDb();
+  const { id, name, age, phoneNumber } = req.body;
   try {
     let result = await db.findOneAndUpdate(
       {
-        _id: new ObjectId("6799116c6ee00e2a780bb9c2"),
+        _id: new ObjectId(id),
       },
-      { $set: { gender: "male" } }
+      { $set: { name, age, phoneNumber } }
     );
     res.json({ success: true, result });
   } catch (error) {
