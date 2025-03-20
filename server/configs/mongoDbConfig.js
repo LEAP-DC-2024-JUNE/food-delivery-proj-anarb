@@ -1,7 +1,7 @@
 // import mongoose from "mongoose";
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 
-// dotenv.config();
+dotenv.config();
 
 // const MONGO_URL = process.env.MONGO_URL;
 
@@ -18,18 +18,18 @@
 // export default connectDb;
 
 import { MongoClient } from "mongodb";
-
 const connectDB = async () => {
-  const client = new MongoClient(
-    "mongodb+srv://duluuf:LM7miFmm6q0eg0Qa@cluster1.pyncrqd.mongodb.net/"
-  );
-  let connection;
+  const MONGO_URL = process.env.MONGO_URL;
+  // const client = new MongoClient(
+  //   "mongodb+srv://duluuf:LM7miFmm6q0eg0Qa@cluster1.pyncrqd.mongodb.net/"
+  // );
+  const client = new MongoClient(MONGO_URL);
   try {
-    connection = await client.connect();
+    await client.connect();
     console.log("Successfully connected to MongoDB");
   } catch (error) {
     console.log(error);
   }
-  return connection.db("Anar").collection("users");
+  // return connection.db("Anar").collection("users");
 };
 export default connectDB;
