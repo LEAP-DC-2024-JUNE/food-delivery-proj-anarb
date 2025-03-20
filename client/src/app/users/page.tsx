@@ -57,7 +57,7 @@ export default function Users() {
   //     }));
   //   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setEditData({ ...editData, [e.target.name]: e.target.value });
   };
 
@@ -152,9 +152,9 @@ export default function Users() {
           <DialogFooter>
             <div className="flex items-center gap-[230px]">
               <Button className="bg-red-500">Delete profile</Button>
-              <Button type="submit" onClick={() => editUser(user._id)}>
+              {/* <Button type="submit" onClick={() => editUser(users._id)}>
                 Save changes
-              </Button>
+              </Button> */}
             </div>
           </DialogFooter>
         </DialogContent>
