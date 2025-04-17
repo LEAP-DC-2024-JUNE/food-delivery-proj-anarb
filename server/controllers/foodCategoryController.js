@@ -6,18 +6,15 @@ export const getFoodCategories = async (req, res) => {
 
     if (!categories) {
       return res.status(404).json({
-        status: "Failed!",
         message: "No categories found!",
       });
     }
 
     return res.status(200).json({
-      status: "Success!",
       data: { categories },
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -29,20 +26,16 @@ export const createFoodCategory = async (req, res) => {
 
     if (!categoryName) {
       return res.status(400).json({
-        status: "Failed!",
         message: "Category Name is required!",
       });
     }
     const category = await FoodCategory.create({ categoryName });
 
     res.status(201).json({
-      status: "Success!",
-      message: "The category is created!",
       data: { category },
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -55,7 +48,6 @@ export const updateFoodCategory = async (req, res) => {
 
     if (!categoryName) {
       return res.status(400).json({
-        status: "Failed!",
         message: "Category name is required!",
       });
     }
@@ -67,19 +59,15 @@ export const updateFoodCategory = async (req, res) => {
 
     if (!foodCategory) {
       return res.status(404).json({
-        status: "Failed!",
         message: "Food Category not found!",
       });
     }
 
     res.status(200).json({
-      status: "Success!",
-      message: "The food category is updated!",
       data: { foodCategory },
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -91,17 +79,13 @@ export const deleteFoodCategory = async (req, res) => {
 
     if (!foodCategory) {
       return res.status(404).json({
-        status: "Failed!",
         message: "Food Category not found!",
       });
     }
 
-    return res.status(200).json({
-      status: "Success!",
-    });
+    return res.status(204).json();
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }

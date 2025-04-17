@@ -1,10 +1,10 @@
 import express from "express";
 import {
+  signIn,
+  signUp,
   getUser,
   resetPassword,
   resetPasswordRequest,
-  signIn,
-  signUp,
   verifyResetPasswordRequest,
 } from "../controllers/authController.js";
 

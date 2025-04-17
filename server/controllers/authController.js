@@ -2,6 +2,8 @@ import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import { sanitizeUser } from "../utils/sanitizeUser.js";
+import { validateEmailFormat } from "../utils/validation.js";
 
 export const getUser = async (req, res) => {
   const { userId } = req.params;
@@ -26,6 +28,13 @@ export const signIn = async (req, res) => {
     return res.status(400).json({
       status: "Failed!",
       message: "Please provide your email and password",
+    });
+  }
+
+  if (!validateEmailFormat(email)) {
+    return res.status(400).json({
+      status: "Failed!",
+      message: "Invalid email format.",
     });
   }
 
@@ -56,10 +65,8 @@ export const signIn = async (req, res) => {
     );
 
     res.status(200).json({
-      status: "Success!",
-      message: "You are logged in successfully! ",
       token: jwtToken,
-      user: user,
+      user: sanitizeUser(user),
     });
   } catch (error) {
     res.status(500).json({
@@ -77,6 +84,13 @@ export const signUp = async (req, res) => {
     return res.status(400).json({
       status: "Failed!",
       message: "Please provide all required fields.",
+    });
+  }
+
+  if (!validateEmailFormat(email)) {
+    return res.status(400).json({
+      status: "Failed!",
+      message: "Invalid email format.",
     });
   }
 
@@ -100,9 +114,7 @@ export const signUp = async (req, res) => {
     });
 
     res.status(201).json({
-      status: "Success!",
-      message: "User registered successfully!",
-      user: { newUser },
+      user: { _id: newUser._id, email: newUser.email },
     });
   } catch (error) {
     res.status(500).json({
@@ -132,7 +144,6 @@ export const resetPasswordRequest = async (req, res) => {
     }
 
     res.status(200).json({
-      status: "Success!",
       message: "Password reset email sent! Please check your inbox.",
     });
   } catch (error) {

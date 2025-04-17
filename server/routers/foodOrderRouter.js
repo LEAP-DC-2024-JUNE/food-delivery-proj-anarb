@@ -1,8 +1,8 @@
 import express from "express";
 import {
+  orderFood,
   getFoodOrders,
   getFoodOrdersByUserId,
-  orderFood,
   updateFoodOrder,
   updateMultipleFoodOrders,
 } from "../controllers/orderController.js";

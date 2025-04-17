@@ -1,9 +1,14 @@
 import FoodOrder from "../models/foodOrderModel.js";
-import Food from "../models/foodModel.js";
 
 export const orderFood = async (req, res) => {
   try {
     const { user, foodOrderItems, totalPrice } = req.body;
+
+    if (!user || !foodOrderItems?.length || !totalPrice) {
+      return res.status(400).json({
+        message: "Missing required order fields",
+      });
+    }
 
     const newOrder = await FoodOrder.create({
       user,
@@ -12,13 +17,10 @@ export const orderFood = async (req, res) => {
     });
 
     res.status(201).json({
-      status: "Success!",
-      message: "Order placed successfully!",
       order: newOrder,
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -31,12 +33,10 @@ export const getFoodOrders = async (req, res) => {
       .populate("foodOrderItems.food", "foodName price");
 
     res.status(200).json({
-      status: "Success",
       orders,
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -44,18 +44,17 @@ export const getFoodOrders = async (req, res) => {
 
 export const getFoodOrdersByUserId = async (req, res) => {
   const { userId } = req.params;
+
   try {
     const userOrders = await FoodOrder.find({ user: userId })
       .populate("user", "name email address")
       .populate("foodOrderItems.food", "foodName price");
 
     res.status(200).json({
-      status: "Success",
       orders: userOrders,
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -66,25 +65,23 @@ export const updateFoodOrder = async (req, res) => {
   const { status } = req.body;
 
   try {
-    const updateFoodOrder = await FoodOrder.findByIdAndUpdate(foodOrderId, {
-      status,
-    });
+    const updateFoodOrder = await FoodOrder.findByIdAndUpdate(
+      foodOrderId,
+      { status },
+      { new: true }
+    );
 
     if (!updateFoodOrder) {
       return res.status(404).json({
-        status: "Failed",
         message: "Order not found",
       });
     }
 
     res.status(200).json({
-      status: "Success",
-      message: "Order status updated successfully",
       order: updateFoodOrder,
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -95,7 +92,6 @@ export const updateMultipleFoodOrders = async (req, res) => {
 
   if (!Array.isArray(orderIds) || !status) {
     return res.status(400).json({
-      status: "Failed",
       message: "Invalid request",
     });
   }
@@ -113,12 +109,10 @@ export const updateMultipleFoodOrders = async (req, res) => {
     }
 
     res.status(200).json({
-      status: "Success",
       message: `${result.modifiedCount} order(s) updated successfully`,
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed",
       message: error.message,
     });
   }

@@ -1,10 +1,10 @@
 import express from "express";
 import {
-  createFood,
-  deleteFood,
-  getAllFood,
   getFood,
+  getAllFood,
+  createFood,
   updateFood,
+  deleteFood,
 } from "../controllers/foodController.js";
 import { getFoodsGroupedByCategory } from "../controllers/foodGroupedController.js";
 

@@ -1,9 +1,9 @@
 import express from "express";
 import {
-  createFoodCategory,
-  deleteFoodCategory,
   getFoodCategories,
+  createFoodCategory,
   updateFoodCategory,
+  deleteFoodCategory,
 } from "../controllers/foodCategoryController.js";
 
 const foodCategoryRouter = express.Router();
