@@ -1,8 +1,8 @@
 import User from "../models/userModel.js";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 import { sanitizeUser } from "../utils/sanitizeUser.js";
 import { validateEmailFormat } from "../utils/validation.js";
 
@@ -18,7 +18,6 @@ export const getUser = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -29,14 +28,12 @@ export const signIn = async (req, res) => {
 
   if (!email || !password) {
     return res.status(400).json({
-      status: "Failed!",
       message: "Please provide your email and password",
     });
   }
 
   if (!validateEmailFormat(email)) {
     return res.status(400).json({
-      status: "Failed!",
       message: "Invalid email format.",
     });
   }
@@ -46,7 +43,6 @@ export const signIn = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        status: "Failed!",
         message: "User not found.",
       });
     }
@@ -54,7 +50,6 @@ export const signIn = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({
-        status: "Failed!",
         message: "Incorrect email or password",
       });
     }
@@ -73,7 +68,6 @@ export const signIn = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -85,14 +79,12 @@ export const signUp = async (req, res) => {
   if (!email || !password) {
     // || !phoneNumber || !address
     return res.status(400).json({
-      status: "Failed!",
       message: "Please provide all required fields.",
     });
   }
 
   if (!validateEmailFormat(email)) {
     return res.status(400).json({
-      status: "Failed!",
       message: "Invalid email format.",
     });
   }
@@ -102,7 +94,6 @@ export const signUp = async (req, res) => {
 
     if (user) {
       return res.status(400).json({
-        status: "Failed!",
         message: "User already exists. Please log in.",
       });
     }
@@ -121,7 +112,6 @@ export const signUp = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -151,7 +141,6 @@ export const resetPasswordRequest = async (req, res) => {
     const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
     const transporter = nodemailer.createTransport({
-      // service: "gmail",
       host: process.env.EMAIL_HOST,
       port: Number(process.env.EMAIL_PORT),
       secure: process.env.EMAIL_SECURE === "true",

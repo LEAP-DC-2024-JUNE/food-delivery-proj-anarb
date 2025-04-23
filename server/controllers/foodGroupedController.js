@@ -12,7 +12,6 @@ export const getFoodsGroupedByCategory = async (req, res) => {
         },
       },
     ]);
-    console.log(groupedFoods);
     const result = await FoodCategory.populate(groupedFoods, {
       path: "_id",
       select: "categoryName",
@@ -20,7 +19,6 @@ export const getFoodsGroupedByCategory = async (req, res) => {
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }
@@ -42,7 +40,6 @@ export const getFoodOrderItemsGrouped = async (req, res) => {
       },
       { $unwind: "$foodDetails" },
 
-      // Lookup user info
       {
         $lookup: {
           from: "users",
@@ -68,7 +65,6 @@ export const getFoodOrderItemsGrouped = async (req, res) => {
         },
       },
 
-      // Group back by order ID
       {
         $group: {
           _id: "$_id",
@@ -82,7 +78,6 @@ export const getFoodOrderItemsGrouped = async (req, res) => {
         },
       },
 
-      // Final cleanup
       {
         $project: {
           _id: 1,
@@ -103,7 +98,6 @@ export const getFoodOrderItemsGrouped = async (req, res) => {
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({
-      status: "Failed!",
       message: error.message,
     });
   }

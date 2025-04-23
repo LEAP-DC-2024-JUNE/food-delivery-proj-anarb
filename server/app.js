@@ -11,6 +11,7 @@ const PORT = 3001;
 
 server.use(express.json());
 server.use(cors());
+
 connectDb();
 
 server.use("/food", foodRouter);

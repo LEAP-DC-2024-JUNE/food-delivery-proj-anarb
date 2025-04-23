@@ -6,15 +6,21 @@ import {
   updateFood,
   deleteFood,
 } from "../controllers/foodController.js";
+import { authorize } from "../middlewares/authorize.js";
+import { authenticate } from "../middlewares/authenticate.js";
 import { getFoodsGroupedByCategory } from "../controllers/foodGroupedController.js";
 
 const foodRouter = express.Router();
 
-foodRouter.post("/", createFood);
+foodRouter.route("/").post(authenticate, authorize("admin"), createFood);
 foodRouter.get("/", getAllFood);
 foodRouter.get("/grouped-foods", getFoodsGroupedByCategory);
 foodRouter.get("/:foodId", getFood);
-foodRouter.patch("/:foodId", updateFood);
-foodRouter.delete("/:foodId", deleteFood);
+foodRouter
+  .route("/:foodId")
+  .patch(authenticate, authorize("admin"), updateFood);
+foodRouter
+  .route("/:foodId")
+  .delete(authenticate, authorize("admin"), deleteFood);
 
 export default foodRouter;
