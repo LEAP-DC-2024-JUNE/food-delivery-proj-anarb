@@ -20,7 +20,7 @@ foodOrderRouter
 foodOrderRouter
   .route("/update-status")
   .patch(authenticate, authorize("admin"), updateMultipleFoodOrders);
-foodOrderRouter.get("/:userId", getFoodOrdersByUserId);
+foodOrderRouter.get("/:userId", authenticate, getFoodOrdersByUserId);
 foodOrderRouter
   .route("/:foodOrderId")
   .patch(authenticate, authorize("admin"), updateFoodOrder);
