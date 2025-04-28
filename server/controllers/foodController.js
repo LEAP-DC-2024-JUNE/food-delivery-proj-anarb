@@ -69,11 +69,11 @@ export const updateFood = async (req, res) => {
     const { foodId } = req.params;
     const { foodName, price, ingredients, image, category } = req.body;
 
-    if (!foodName || !price || !ingredients || !image || !category) {
-      return res.status(400).json({
-        message: "Required fields",
-      });
-    }
+    // if (!foodName || !price || !ingredients || !image || !category) {
+    //   return res.status(400).json({
+    //     message: "Required fields",
+    //   });
+    // }
 
     const food = await Food.findByIdAndUpdate(foodId, req.body, { new: true });
 
