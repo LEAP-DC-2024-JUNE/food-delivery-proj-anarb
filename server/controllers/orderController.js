@@ -2,7 +2,7 @@ import FoodOrder from "../models/foodOrderModel.js";
 
 export const orderFood = async (req, res) => {
   try {
-    const { user, foodOrderItems, totalPrice } = req.body;
+    const { user, foodOrderItems, totalPrice, deliveryAddress } = req.body;
 
     if (!user || !foodOrderItems?.length || !totalPrice) {
       return res.status(400).json({
@@ -14,6 +14,7 @@ export const orderFood = async (req, res) => {
       user,
       foodOrderItems,
       totalPrice,
+      deliveryAddress,
     });
 
     res.status(201).json({
