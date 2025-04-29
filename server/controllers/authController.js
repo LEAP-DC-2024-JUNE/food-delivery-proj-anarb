@@ -160,7 +160,7 @@ export const resetPasswordRequest = async (req, res) => {
       html: `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #f9fafb;">
     <div style="text-align: center; margin-bottom: 20px;">
-      <img src="https://food-delivery-project-self.vercel.app/logo.png" alt="Your Logo" style="max-height: 60px;" />
+      <img src="https://food-delivery-project-self.vercel.app/logo.png" alt="Food Delivery" style="max-height: 60px;" />
     </div>
     <h2 style="color: #111827;">Reset Your Password</h2>
     <p style="font-size: 16px; color: #374151;">
