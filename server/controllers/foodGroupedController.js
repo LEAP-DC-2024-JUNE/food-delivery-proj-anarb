@@ -74,7 +74,8 @@ export const getFoodOrderItemsGrouped = async (req, res) => {
           createdAt: { $first: "$createdAt" },
           status: { $first: "$status" },
           user: { $first: "$userDetails" },
-          address: { $first: "$userDetails.address" },
+          // address: { $first: "$userDetails.address" },
+          deliveryAddress: { $first: "$deliveryAddress" },
         },
       },
 
@@ -91,6 +92,7 @@ export const getFoodOrderItemsGrouped = async (req, res) => {
             email: "$user.email",
             address: "$user.address",
           },
+          deliveryAddress: 1,
         },
       },
     ]);

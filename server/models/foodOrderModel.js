@@ -29,6 +29,10 @@ const foodOrderSchema = new mongoose.Schema(
       enum: ["pending", "delivered", "canceled"],
       default: "pending",
     },
+    deliveryAddress: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
