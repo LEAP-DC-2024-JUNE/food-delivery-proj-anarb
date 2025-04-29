@@ -154,9 +154,32 @@ export const resetPasswordRequest = async (req, res) => {
       from: process.env.EMAIL_USERNAME,
       to: user.email,
       subject: "Password Reset Request",
-      html: `<p>You requested to reset your password.</p>
-             <p>Click <a href="${resetLink}">here</a> to reset your password.</p>
-             <p>This link will expire in 15 minutes.</p>`,
+      // html: `<p>You requested to reset your password.</p>
+      //        <p>Click <a href="${resetLink}">here</a> to reset your password.</p>
+      //        <p>This link will expire in 15 minutes.</p>`,
+      html: `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #f9fafb;">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="https://food-delivery-project-self.vercel.app/logo.png" alt="Your Logo" style="max-height: 60px;" />
+    </div>
+    <h2 style="color: #111827;">Reset Your Password</h2>
+    <p style="font-size: 16px; color: #374151;">
+      Hi ${user.email || "there"},<br /><br />
+      We received a request to reset your password. Click the button below to choose a new one.
+    </p>
+    <a href="${resetLink}" style="display: inline-block; background-color: #dc2626; color: #ffffff; padding: 12px 20px; margin: 20px 0; text-decoration: none; border-radius: 6px; font-weight: bold;">
+      Reset Password
+    </a>
+    <p style="font-size: 14px; color: #6b7280;">
+      This link will expire in 15 minutes.<br />
+      If you didn’t request a password reset, you can safely ignore this email.
+    </p>
+    <hr style="margin: 32px 0;" />
+    <p style="font-size: 12px; color: #9ca3af; text-align: center; margin-top: 32px;">
+      &copy; ${new Date().getFullYear()} Nom nom Food Delivery. All rights reserved.
+    </p>
+  </div>
+`,
     });
 
     res.status(200).json({
