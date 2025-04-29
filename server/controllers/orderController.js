@@ -49,7 +49,8 @@ export const getFoodOrdersByUserId = async (req, res) => {
   try {
     const userOrders = await FoodOrder.find({ user: userId })
       .populate("user", "name email address")
-      .populate("foodOrderItems.food", "foodName price");
+      .populate("foodOrderItems.food", "foodName price")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       orders: userOrders,
